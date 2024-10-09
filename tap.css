@@ -1,0 +1,208 @@
+/* General styling */
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(90deg, #000000, #3533cd);
+    font-family: Arial, sans-serif;
+}
+
+.game-container {
+    width: 100vw;
+    max-width: 400px;
+    max-height: 700px;
+    background: linear-gradient(90deg, #000000, #3533cd);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.message-box {
+    background-color: #8c52ff;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.user-info {
+    color: #fff;
+    font-size: 20px;
+    text-align: left;
+    font-style: italic;
+    margin-top: 20px;
+}
+
+.logo-section {
+    position: relative;
+}
+
+/* Main star logo */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+
+.logo-img {
+    width: 250px;
+    height: 250px;
+}
+
+/* Side star link styling */
+.side-star {
+    position: absolute;
+    left: 0; /* Align to the left */
+    bottom: 0; /* Place it directly below the logo */
+    transform: translateY(50%); /* Adjust position */
+}
+
+.star-link-logo {
+    width: 60px; /* Size of the left-side star */
+    height: 60px;
+}
+
+.coin-display {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.time-button-container {
+    position: relative;
+    height: 70px;
+    margin-bottom: 40px;
+}
+
+.time-button {
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    background-color: #8c52ff;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.water-fill {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 100%;
+    height: 0;
+    background-color: #00BFFF;
+    transition: height 30s linear;
+    transform: translateX(-50%);
+}
+
+#time-text {
+    position: relative;
+    z-index: 2;
+}
+/* Modal Styling */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Black background with opacity */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 300px;
+}
+
+.modal-content input {
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.modal-content button {
+    padding: 10px 20px;
+    background-color: #8c52ff;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.modal-content button:hover {
+    background-color: #6c42cc;
+}
+
+
+.time-button.filled {
+    background-color: #0056b3;
+}
+
+.time-button.filled #time-text {
+    color: #ffcc00;
+}
+
+.menu-container {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+}
+
+.round-box {
+    width: 40px;
+    height: 260px;
+    background-color: #8c52ff;
+    border-radius: 50px;
+    margin-right: 7px;
+}
+
+.menu {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.menu-icon {
+    width: 30px;
+    height: 30px;
+    margin: 15px 0;
+}
+.countdown-display {
+    color: #ffffff; /* Change text color to white */
+    font-size: 24px; /* Adjust font size for better visibility */
+    text-align: left; /* Center the text */
+    margin-bottom: 20px; /* Space below the countdown */
+}

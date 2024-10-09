@@ -1,0 +1,131 @@
+/* General styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(90deg, #000000, #3533cd);
+    color: white;
+}
+
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 900px;
+    padding: 20px;
+}
+
+.task-container {
+    height: 600px; /* Adjust height as needed */
+    width: 80%;
+    background: linear-gradient(90deg, #000000, #3533cd);
+    border-radius: 20px;
+    margin-top: 30px;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    overflow: hidden; /* Hide overflowing content */
+}
+
+.task-header {
+    text-align: center;
+}
+
+.star-logo {
+    width: 60px;
+    height: 60px;
+    display: block;
+    padding-top: 30px;
+    margin: 0 auto 10px auto;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+p {
+    font-size: 14px;
+    color: #ffffff;
+    margin-top: 0;
+}
+
+.swiper-container {
+    width: 100%; /* Full width */
+    overflow: hidden; /* Prevent tasks from being displayed outside the container */
+}
+
+.swiper-wrapper {
+    display: flex;
+}
+
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color:rgb(64, 133, 160);
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    height: 80px; /* Set fixed height for slider tasks */
+}
+
+.non-slider-task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(32, 55, 65);
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    height: 60px; /* Slightly decreased height for non-slider tasks */
+}
+
+.task-info {
+    display: flex;
+    align-items: center;
+}
+
+.task-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.task-description {
+    display: flex;
+    flex-direction: column;
+}
+
+.task-description p {
+    margin: 0;
+    font-size: 16px;
+}
+
+.task-description span {
+    font-size: 12px;
+    color: #ccc2d6;
+}
+
+.claim-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.claim-button:hover {
+    background-color: #218838;
+}
+
+/* Menu styles remain unchanged */
+.non-slider-tasks {
+    margin-top: 30px; /* Adjust the distance as needed */
+}

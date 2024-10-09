@@ -1,0 +1,72 @@
+/* General styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    background-color: #3533cd; /* Use your preferred color */
+    color: white;
+}
+
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 900px;
+    padding: 20px;
+}
+
+.invite-container {
+    width: 80%;
+    background: linear-gradient(90deg, #000000, #3533cd);
+    border-radius: 20px;
+    margin-top: 30px;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    text-align: center; /* Center the text */
+}
+
+.invite-header {
+    margin-bottom: 20px; /* Space below the header */
+}
+
+.claim-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.claim-button:hover {
+    background-color: #218838;
+}
+
+/* Transparent box styles */
+.transparent-box {
+    background: rgba(255, 255, 255, 0.2); /* Light color with transparency */
+    padding: 15px;
+    border-radius: 10px;
+    margin: 20px 0; /* Space around the box */
+}
+
+.transparent-box p {
+    margin: 0;
+    color: #fff; /* Ensure text is readable */
+}
+
+/* Menu styles */
+.menu-container {
+    /* Add styles for the menu container here */
+}
+
+.menu-icon {
+    width: 40px; /* Adjust icon size */
+    height: 40px;
+}
