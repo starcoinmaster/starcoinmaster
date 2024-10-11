@@ -46,6 +46,8 @@
                         </div>
                     </div>
                 </div>
+                <!-- Add Pagination if needed -->
+                <div class="swiper-pagination"></div>
             </div>
 
             <!-- Non-slider tasks (can be clicked again after 5 minutes) -->
@@ -98,21 +100,48 @@
 
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script>
-        var swiper = new Swiper('.swiper-container', {
-            direction: 'horizontal',
-            loop: true,
-            slidesPerView: 1,
-            spaceBetween: 30,
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false,
-            },
-            touchEventsTarget: 'container',
-            grabCursor: true,
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
+        document.addEventListener("DOMContentLoaded", function() {
+            // Initialize Swiper after the DOM is loaded
+            var swiper = new Swiper('.swiper-container', {
+                direction: 'horizontal',
+                loop: true,
+                slidesPerView: 1,
+                spaceBetween: 30,
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+            });
+
+            // Check for claimed tasks and update buttons
+            const claimButtons = document.querySelectorAll('.claim-button');
+            claimButtons.forEach(button => {
+                const taskId = button.parentElement.onclick.toString().match(/'([^']+)'/)[1]; // Extract taskId
+                const lastClaimTime = localStorage.getItem(`lastClaimTime_${taskId}`);
+                const currentTime = new Date().getTime();
+
+                // Check if the task is a slider task
+                const isSliderTask = taskId === 'task1' || taskId === 'task2';
+                const claimedTasks = JSON.parse(localStorage.getItem('claimedTasks')) || {};
+
+                if (isSliderTask && claimedTasks[taskId]) {
+                    // If slider task is claimed, disable the button
+                    button.textContent = "Claimed";
+                    button.style.backgroundColor = "gray";
+                    button.style.pointerEvents = "none";
+                } else if (!isSliderTask && lastClaimTime && currentTime - lastClaimTime < 300000) {
+                    // If it's a non-slider task and hasn't been 5 minutes
+                    button.textContent = "Claimed";
+                    button.style.backgroundColor = "gray";
+                    button.style.pointerEvents = "none";
+                } else {
+                    button.style.display = "inline-block"; // Show button if conditions are met
+                }
+            });
         });
 
         function handleTaskClick(url, taskElement, points, taskId, isSliderTask) {
@@ -152,55 +181,15 @@
             userPoints += points; // Each claim adds points (slider or non-slider)
             localStorage.setItem('userPoints', userPoints);
 
-            // Mark the task as claimed in localStorage for slider tasks
+            // Update claimed task status
             claimedTasks[taskId] = true;
             localStorage.setItem('claimedTasks', JSON.stringify(claimedTasks));
 
-            // Disable the button after claim
+            // Update button state to "Claimed"
             button.textContent = "Claimed";
             button.style.backgroundColor = "gray";
             button.style.pointerEvents = "none";
-
-            // For non-slider tasks, re-enable the button after 5 minutes
-            if (!isSliderTask) {
-                setTimeout(() => {
-                    button.textContent = "Claim";
-                    button.style.backgroundColor = ""; // Reset background color
-                    button.style.pointerEvents = "auto"; // Re-enable the button
-                }, 300000); // 5 minutes in milliseconds
-            }
         }
-
-        // On page load, check for claimed tasks and update the buttons
-        document.addEventListener("DOMContentLoaded", function() {
-            const claimButtons = document.querySelectorAll('.claim-button');
-            claimButtons.forEach(button => {
-                const taskId = button.parentElement.onclick.toString().match(/'([^']+)'/)[1]; // Extract taskId
-                const lastClaimTime = localStorage.getItem(`lastClaimTime_${taskId}`);
-                const currentTime = new Date().getTime();
-
-                // Check if the task is a slider task
-                const isSliderTask = taskId === 'task1' || taskId === 'task2';
-                const claimedTasks = JSON.parse(localStorage.getItem('claimedTasks')) || {};
-
-                if (isSliderTask && claimedTasks[taskId]) {
-                    // If slider task is claimed, permanently disable the button
-                    button.textContent = "Claimed";
-                    button.style.backgroundColor = "gray";
-                    button.style.pointerEvents = "none";
-                } else if (!isSliderTask && lastClaimTime && currentTime - lastClaimTime < 300000) {
-                    // If non-slider task was claimed within 5 minutes, disable the button
-                    button.textContent = "Claimed";
-                    button.style.backgroundColor = "gray";
-                    button.style.pointerEvents = "none";
-                } else if (!isSliderTask && (!lastClaimTime || currentTime - lastClaimTime >= 300000)) {
-                    // Re-enable non-slider buttons after 5 minutes
-                    button.textContent = "Claim";
-                    button.style.backgroundColor = ""; // Reset background color
-                    button.style.pointerEvents = "auto"; // Re-enable the button
-                }
-            });
-        });
     </script>
 </body>
 </html>
