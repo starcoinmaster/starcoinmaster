@@ -55,10 +55,11 @@ timeButton.addEventListener("click", function() {
 // Check farming progress and calculate remaining time
 function checkFarmingProgress() {
     const farmingStartTime = localStorage.getItem('farmingStartTime');
-    
+    const farmingDuration = 30; // Duration for farming
+
     if (farmingStartTime) {
         const timePassed = Math.floor((Date.now() - parseInt(farmingStartTime)) / 1000);
-        const remainingTime = 30 - timePassed;
+        const remainingTime = farmingDuration - timePassed;
 
         if (remainingTime > 0) {
             resumeFarming(remainingTime);
@@ -76,7 +77,7 @@ function startFarming() {
     timeButton.classList.add("filled");
     timeText.innerText = "Farming will be ended: 00:30";
     timeButton.disabled = true;
-  
+
     localStorage.setItem('farmingStartTime', Date.now()); // Save the current time when farming starts
 
     waterFill.style.height = "100%"; // Start with full height
