@@ -12,8 +12,7 @@
         <div class="invite-container">
             <div class="invite-header">
                 <h2>Invite Friends</h2>
-                <p>☆ 0</p>
-                <button class="claim-button">Claim</button>
+                <button class="invite" onclick="copyReferralLink()">Invite</button>
             </div>
 
             <!-- Transparent box with light color message -->
@@ -21,9 +20,10 @@
                 <p>Invite friends to claim your referral rewards</p>
             </div>
 
-            <!-- Removed friend list for simplicity -->
-            <div class="friends-list">
-                <!-- Future implementation can go here -->
+            <!-- Displaying the users who joined through the referral link -->
+            <div class="friends-list" id="friendsList">
+                <p>Friends who joined:</p>
+                <ul id="joinedFriends"></ul>
             </div>
         </div>
 
@@ -38,5 +38,34 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const userName = localStorage.getItem('userName'); // Assuming you store the user's name in localStorage
+        const referralLink = `https://shorturl.at/6Avu4?referral=${userName}`;
+
+        function copyReferralLink() {
+            navigator.clipboard.writeText(referralLink).then(() => {
+                alert('Referral link copied to clipboard');
+            }).catch(err => {
+                console.error('Could not copy text: ', err);
+            });
+        }
+
+        // Function to display joined friends
+        function displayJoinedFriends() {
+            const joinedFriends = JSON.parse(localStorage.getItem('joinedFriends')) || [];
+            const friendsList = document.getElementById('joinedFriends');
+            friendsList.innerHTML = ''; // Clear existing list
+
+            joinedFriends.forEach(friend => {
+                const li = document.createElement('li');
+                li.textContent = friend;
+                friendsList.appendChild(li);
+            });
+        }
+
+        // Call this function to display joined friends on page load
+        displayJoinedFriends();
+    </script>
 </body>
 </html>
