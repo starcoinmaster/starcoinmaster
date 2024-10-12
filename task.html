@@ -17,11 +17,11 @@
                 <p>We’ll reward you immediately with points after each task completion.</p>
             </div>
 
-            <!-- Slider tasks (permanently disabled after claiming) -->
+            <!-- Slider tasks -->
             <div class="swiper-container">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                        <div class="task-item" onclick="handleTaskClick('https://t.me/star_coin_master', this, 100, 'task1', true)">
+                        <div class="task-item" onclick="handleTaskClick('https://t.me/star_coin_master', this, 100, 'task1')">
                             <div class="task-info">
                                 <img src="telegram.png" alt="Telegram Logo" class="task-icon">
                                 <div class="task-description">
@@ -29,12 +29,12 @@
                                     <span>+ 100 str</span>
                                 </div>
                             </div>
-                            <button class="claim-button" style="display: none;" onclick="claimPoints(event, this, 'task1', true)">Claim</button>
+                            <button class="claim-button" style="display: none;" onclick="claimPoints(event, this, 'task1')">Claim</button>
                         </div>
                     </div>
 
                     <div class="swiper-slide">
-                        <div class="task-item" onclick="handleTaskClick('https://t.me/star_coin_master1', this, 100, 'task2', true)">
+                        <div class="task-item" onclick="handleTaskClick('https://t.me/star_coin_master1', this, 100, 'task2')">
                             <div class="task-info">
                                 <img src="telegram.png" alt="Telegram Logo" class="task-icon">
                                 <div class="task-description">
@@ -42,17 +42,17 @@
                                     <span>+ 100 str</span>
                                 </div>
                             </div>
-                            <button class="claim-button" style="display: none;" onclick="claimPoints(event, this, 'task2', true)">Claim</button>
+                            <button class="claim-button" style="display: none;" onclick="claimPoints(event, this, 'task2')">Claim</button>
                         </div>
                     </div>
                 </div>
-                <!-- Add Pagination if needed -->
+                <!-- Add Pagination -->
                 <div class="swiper-pagination"></div>
             </div>
 
-            <!-- Non-slider tasks (can be clicked again after 5 minutes) -->
+            <!-- Non-slider tasks -->
             <div class="non-slider-tasks">
-                <div class="non-slider-task" onclick="handleTaskClick('https://t.me/blum/app?startapp=ref_8vhUHveoeQ', this, 100, 'task3', false)">
+                <div class="non-slider-task" onclick="handleTaskClick('https://t.me/blum/app?startapp=ref_8vhUHveoeQ', this, 100, 'task3')">
                     <div class="task-info">
                         <img src="blum.png" alt="Blum Logo" class="task-icon">
                         <div class="task-description">
@@ -60,10 +60,10 @@
                             <span>+ 100 str</span>
                         </div>
                     </div>
-                    <button class="claim-button" style="display: none;" onclick="claimPoints(event, this, 'task3', false)">Claim</button>
+                    <button class="claim-button" style="display: none;" onclick="claimPoints(event, this, 'task3')">Claim</button>
                 </div>
 
-                <div class="non-slider-task" onclick="handleTaskClick('https://t.me/star_coin_master_bot', this, 100, 'task4', false)">
+                <div class="non-slider-task" onclick="handleTaskClick('https://t.me/star_coin_master_bot', this, 100, 'task4')">
                     <div class="task-info">
                         <img src="friend.png" alt="Friend Logo" class="task-icon">
                         <div class="task-description">
@@ -71,10 +71,10 @@
                             <span>+ 100 str</span>
                         </div>
                     </div>
-                    <button class="claim-button" style="display: none;" onclick="claimPoints(event, this, 'task4', false)">Claim</button>
+                    <button class="claim-button" style="display: none;" onclick="claimPoints(event, this, 'task4')">Claim</button>
                 </div>
 
-                <div class="non-slider-task" onclick="handleTaskClick('https://t.me/major/start?startapp=6850021970', this, 100, 'task5', false)">
+                <div class="non-slider-task" onclick="handleTaskClick('https://t.me/major/start?startapp=6850021970', this, 100, 'task5')">
                     <div class="task-info">
                         <img src="major.png" alt="Major Logo" class="task-icon">
                         <div class="task-description">
@@ -82,7 +82,7 @@
                             <span>+ 100 str</span>
                         </div>
                     </div>
-                    <button class="claim-button" style="display: none;" onclick="claimPoints(event, this, 'task5', false)">Claim</button>
+                    <button class="claim-button" style="display: none;" onclick="claimPoints(event, this, 'task5')">Claim</button>
                 </div>
             </div>
         </div>
@@ -100,96 +100,76 @@
 
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Initialize Swiper after the DOM is loaded
-            var swiper = new Swiper('.swiper-container', {
-                direction: 'horizontal',
-                loop: true,
-                slidesPerView: 1,
-                spaceBetween: 30,
-                autoplay: {
-                    delay: 3000,
-                    disableOnInteraction: false,
-                },
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true,
-                },
-            });
+       document.addEventListener("DOMContentLoaded", function () {
+    // Initialize Swiper
+    var swiper = new Swiper('.swiper-container', {
+        direction: 'horizontal',
+        loop: true,
+        slidesPerView: 1,
+        spaceBetween: 30,
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+    });
 
-            // Check for claimed tasks and update buttons
-            const claimButtons = document.querySelectorAll('.claim-button');
-            claimButtons.forEach(button => {
-                const taskId = button.parentElement.onclick.toString().match(/'([^']+)'/)[1]; // Extract taskId
-                const lastClaimTime = localStorage.getItem(`lastClaimTime_${taskId}`);
-                const currentTime = new Date().getTime();
+    // Check for claimed tasks and update buttons
+    const claimButtons = document.querySelectorAll('.claim-button');
+    const claimedTasks = JSON.parse(localStorage.getItem('claimedTasks')) || {};
 
-                // Check if the task is a slider task
-                const isSliderTask = taskId === 'task1' || taskId === 'task2';
-                const claimedTasks = JSON.parse(localStorage.getItem('claimedTasks')) || {};
+    claimButtons.forEach(button => {
+        const taskId = button.parentElement.onclick.toString().match(/'([^']+)'/)[1]; // Extract taskId
 
-                if (isSliderTask && claimedTasks[taskId]) {
-                    // If slider task is claimed, disable the button
-                    button.textContent = "Claimed";
-                    button.style.backgroundColor = "gray";
-                    button.style.pointerEvents = "none";
-                } else if (!isSliderTask && lastClaimTime && currentTime - lastClaimTime < 300000) {
-                    // If it's a non-slider task and hasn't been 5 minutes
-                    button.textContent = "Claimed";
-                    button.style.backgroundColor = "gray";
-                    button.style.pointerEvents = "none";
-                } else {
-                    button.style.display = "inline-block"; // Show button if conditions are met
-                }
-            });
-        });
-
-        function handleTaskClick(url, taskElement, points, taskId, isSliderTask) {
-            // Open the URL in a new tab
-            window.open(url, '_blank');
-
-            // Check if it's a slider task (permanently disabled after one claim)
-            const claimedTasks = JSON.parse(localStorage.getItem('claimedTasks')) || {};
-            if (isSliderTask && claimedTasks[taskId]) return; // If already claimed, exit
-
-            // Show the claim button
-            const claimButton = taskElement.querySelector('.claim-button');
-            claimButton.style.display = 'inline-block';
-        }
-
-        function claimPoints(event, button, taskId, isSliderTask) {
-            event.stopPropagation(); // Prevent default action
-
-            // Check if the task has already been claimed for slider tasks (permanent claim)
-            const claimedTasks = JSON.parse(localStorage.getItem('claimedTasks')) || {};
-            if (claimedTasks[taskId]) return;
-
-            // For non-slider tasks, check if 5 minutes have passed since the last claim
-            if (!isSliderTask) {
-                const lastClaimTime = localStorage.getItem(`lastClaimTime_${taskId}`);
-                const currentTime = new Date().getTime();
-
-                if (lastClaimTime && currentTime - lastClaimTime < 300000) {
-                    // If 5 minutes haven't passed, do nothing
-                    return;
-                }
-                localStorage.setItem(`lastClaimTime_${taskId}`, currentTime); // Update claim time
-            }
-
-            // Update user's points in localStorage
-            let userPoints = parseInt(localStorage.getItem('userPoints')) || 0;
-            userPoints += points; // Each claim adds points (slider or non-slider)
-            localStorage.setItem('userPoints', userPoints);
-
-            // Update claimed task status
-            claimedTasks[taskId] = true;
-            localStorage.setItem('claimedTasks', JSON.stringify(claimedTasks));
-
-            // Update button state to "Claimed"
+        if (claimedTasks[taskId]) {
+            // Task already claimed
             button.textContent = "Claimed";
-            button.style.backgroundColor = "gray";
-            button.style.pointerEvents = "none";
+            button.style.backgroundColor = "gray"; // Change button color to indicate it's claimed
+            button.style.pointerEvents = "none"; // Disable the claim button
+            button.parentElement.style.pointerEvents = "none"; // Disable the entire task item
+        } else {
+            button.style.display = 'none'; // Hide button by default
         }
+    });
+});
+
+function handleTaskClick(url, taskElement, points, taskId) {
+    const claimedTasks = JSON.parse(localStorage.getItem('claimedTasks')) || {};
+    if (claimedTasks[taskId]) return; // Prevent further clicks if claimed
+
+    window.open(url, '_blank');
+    const claimButton = taskElement.querySelector('.claim-button');
+    claimButton.style.display = 'inline-block'; // Show claim button
+}
+
+function claimPoints(event, button, taskId) {
+    event.stopPropagation(); // Prevent default action
+
+    const claimedTasks = JSON.parse(localStorage.getItem('claimedTasks')) || {};
+    if (claimedTasks[taskId]) return; // Prevent claiming if already claimed
+
+    let userPoints = parseInt(localStorage.getItem('userPoints')) || 0;
+    userPoints += 100; // Add 100 points
+    localStorage.setItem('userPoints', userPoints);
+
+    // Mark the task as claimed
+    claimedTasks[taskId] = true;
+    localStorage.setItem('claimedTasks', JSON.stringify(claimedTasks));
+
+    // Update the button text and disable the task item
+    button.textContent = "Claimed"; // Update button text to "Claimed"
+    button.style.backgroundColor = "gray"; // Change button color to gray
+    button.style.pointerEvents = "none"; // Disable the claim button
+
+    // Disable the entire task item
+    const taskElement = button.parentElement;
+    taskElement.style.pointerEvents = "none"; // Disable entire task item
+    taskElement.classList.add("claimed"); // Optional: add a class for styling
+}
+
     </script>
 </body>
 </html>
