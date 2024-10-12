@@ -1,6 +1,7 @@
 let coinCount = parseInt(localStorage.getItem('coinCount')) || 0; // Load total coins from local storage
-let isFarming = false; // Farming state
+const totalFarmingTime = 8 * 60 * 60; // 8 hours in seconds (28,800 seconds)
 let countdownInterval; // Variable for countdown interval
+let isFarming = false; // Farming state
 
 const timeButton = document.getElementById("time-button");
 const waterFill = document.getElementById("water-fill");
@@ -20,11 +21,9 @@ document.addEventListener("DOMContentLoaded", function () {
     if (storedNickname) {
         userInfoElement.innerText = `Hello, ${storedNickname}`; // Display the stored nickname
     } else {
-        // Show the modal if no nickname is stored
-        nicknameModal.style.display = 'flex';
+        nicknameModal.style.display = 'flex'; // Show the modal if no nickname is stored
     }
 
-    // When the user clicks submit, save the nickname
     nicknameSubmit.addEventListener('click', function () {
         const nickname = nicknameInput.value.trim();
         if (nickname) {
@@ -36,11 +35,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Update coin count display with the total coins
     coinCountDisplay.innerText = coinCount; // Show total coin count
 
-    // Check if farming was ongoing before reload
-    checkFarmingProgress();
+    checkFarmingProgress(); // Check if farming was ongoing
 });
 
 // Farming button logic
@@ -55,11 +52,10 @@ timeButton.addEventListener("click", function() {
 // Check farming progress and calculate remaining time
 function checkFarmingProgress() {
     const farmingStartTime = localStorage.getItem('farmingStartTime');
-    const farmingDuration = 30; // Duration for farming
-
+    
     if (farmingStartTime) {
-        const timePassed = Math.floor((Date.now() - parseInt(farmingStartTime)) / 1000);
-        const remainingTime = farmingDuration - timePassed;
+        const timePassed = Math.floor((Date.now() - parseInt(farmingStartTime)) / 1000); // Get time passed in seconds
+        const remainingTime = totalFarmingTime - timePassed;
 
         if (remainingTime > 0) {
             resumeFarming(remainingTime);
@@ -75,58 +71,71 @@ function checkFarmingProgress() {
 function startFarming() {
     isFarming = true;
     timeButton.classList.add("filled");
-    timeText.innerText = "Farming will be ended: 00:30";
+    timeText.innerText = "Farming will be ended: 08:00:00";
     timeButton.disabled = true;
 
     localStorage.setItem('farmingStartTime', Date.now()); // Save the current time when farming starts
 
     waterFill.style.height = "100%"; // Start with full height
-    waterFill.style.transition = "height 30s linear"; // Full farming time
+    waterFill.style.transition = "height 8h linear"; // 8-hour water fill
 
-    let countdown = 30; // 30 seconds for farming
+    let countdown = totalFarmingTime; // 28,800 seconds for 8 hours
     countdownInterval = setInterval(() => {
         countdown--;
-        timeText.innerText = `Farming will be ended: 00:${countdown < 10 ? "0" : ""}${countdown}`;
+        const hours = Math.floor(countdown / 3600);
+        const minutes = Math.floor((countdown % 3600) / 60);
+        const seconds = countdown % 60;
+        timeText.innerText = `Farming will be ended: ${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+
         if (countdown <= 0) {
             clearInterval(countdownInterval);
-            drainWater(); // Call to drain water
+            drainWater();
             timeText.innerText = "Claim Coins";
             timeText.style.color = "#ffcc00";
             timeButton.disabled = false;
-            localStorage.removeItem('farmingStartTime'); // Remove farming start time when done
+            localStorage.removeItem('farmingStartTime');
         }
     }, 1000);
 }
 
-// Resume farming if page is reloaded during farming
+// Resume farming if page is reloaded
 function resumeFarming(remainingTime) {
     isFarming = true;
     timeButton.classList.add("filled");
-    timeText.innerText = `Farming will be ended: 00:${remainingTime < 10 ? "0" : ""}${remainingTime}`;
+    const hours = Math.floor(remainingTime / 3600);
+    const minutes = Math.floor((remainingTime % 3600) / 60);
+    const seconds = remainingTime % 60;
+    timeText.innerText = `Farming will be ended: ${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
     timeButton.disabled = true;
 
     waterFill.style.height = "100%";
-    waterFill.style.transition = `height ${remainingTime}s linear`;
+    waterFill.style.transition = `height ${remainingTime}s linear`; // Adjust water fill animation based on remaining time
 
     countdownInterval = setInterval(() => {
         remainingTime--;
-        timeText.innerText = `Farming will be ended: 00:${remainingTime < 10 ? "0" : ""}${remainingTime}`;
+        const hours = Math.floor(remainingTime / 3600);
+        const minutes = Math.floor((remainingTime % 3600) / 60);
+        const seconds = remainingTime % 60;
+        timeText.innerText = `Farming will be ended: ${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+
         if (remainingTime <= 0) {
             clearInterval(countdownInterval);
-            drainWater(); 
+            drainWater();
             timeText.innerText = "Claim Coins";
             timeText.style.color = "#ffcc00";
             timeButton.disabled = false;
-            localStorage.removeItem('farmingStartTime'); // Clear stored farming start time
+            localStorage.removeItem('farmingStartTime');
         }
     }, 1000);
 }
 
+// Drain water logic
 function drainWater() {
     waterFill.style.transition = "height 2s linear";
-    waterFill.style.height = "0"; 
+    waterFill.style.height = "0";
 }
 
+// Claim coins logic
 function claimCoins() {
     if (timeText.innerText === "Claim Coins") {
         coinCount += 60; // Add 60 coins from farming
@@ -136,6 +145,7 @@ function claimCoins() {
     }
 }
 
+// Reset farming logic
 function resetFarming() {
     isFarming = false;
     timeButton.classList.remove("filled");
